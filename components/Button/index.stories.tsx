@@ -35,7 +35,9 @@ export const Link: Story = {
         variant: 'link',
         color: 'blue',
         size: 'md',
-        children: "Button"
+        children: "Button",
+        hoverEffect: "none",
+        transition: "quick"
     }
 };
 

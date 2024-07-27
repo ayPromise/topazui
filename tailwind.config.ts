@@ -12,9 +12,9 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
-     colors: {
+      colors: {
         blue: {
-          solid: '#1e3a8a',
+          solid: '#3FA2F6',
           hover: '#2563eb',
           text: '#ffffff',
         },
@@ -64,9 +64,24 @@ const config: Config = {
           text: '#000000',
         },
       },
-      animation:{
-        'spin-faster' : 'spin 0.65s linear infinite'
+
+      keyframes: {
+        wiggle: {
+          "0%, 100%": { transform: "rotate(-3deg)" },
+          "50%": { transform: "rotate(3deg)" }
+        },
+        click: {
+          '0%, 100%': { transform: 'scale(1)' },
+          '50%': { transform: 'scale(0.96)' }
+        }
+      },
+
+      animation: {
+        'spin-faster': 'spin 0.65s linear infinite',
+        'wiggle': 'wiggle 200ms ease-in-out',
+        'click': 'click 50ms linear'
       }
+
     },
   },
   plugins: [],
