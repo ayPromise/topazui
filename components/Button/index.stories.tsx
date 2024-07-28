@@ -16,7 +16,7 @@ type Story = StoryObj<typeof Button>
 export const Solid: Story = {
     args: {
         variant: 'solid',
-        color: 'blue',
+        color: "pink",
         size: 'md',
         children: "Button",
         onClick: action("button-clicked")
@@ -72,7 +72,6 @@ export const Custom: Story = {
         customStyles: "bg-teal-200 hover:bg-red-500 disabled:bg-gray-500",
         loadingText: "Custom text",
         customLoader: <div className='w-3 h-3 animate-spin bg-black'></div>,
-        onClick: action("button-clicked")
-
+        onClick: action("button-clicked"),
     }
 };

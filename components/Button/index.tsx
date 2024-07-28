@@ -40,7 +40,7 @@ const Button: React.FC<ButtonProps> = ({
   children,
   ...props
 }) => {
-  const baseStyles = 'flex items-center justify-center rounded focus:outline-none';
+  const baseStyles = 'flex items-center justify-center rounded';
 
   const colorScheme = {
     blue: {
@@ -115,15 +115,18 @@ const Button: React.FC<ButtonProps> = ({
     none: ""
   }
 
+  const animationStyles = 'active:animate-click'
+  const disabledStyles = 'opacity-50 cursor-not-allowed hover pointer-events-none'
+
   const buttonStyles = clsx(
     baseStyles,
     colorScheme[color][variant],
-    sizeStyles[size],
-    transitionStyles[transition],
-    hoverEffectStyles[hoverEffect],
+    sizeStyles[size as keyof typeof sizeStyles],
+    transitionStyles[transition as keyof typeof transitionStyles],
+    hoverEffectStyles[hoverEffect as keyof typeof hoverEffectStyles],
     {
-      'active:animate-click': clickAnimation,
-      'opacity-50 cursor-not-allowed hover pointer-events-none': disabled || loading,
+      [animationStyles]: clickAnimation,
+      [disabledStyles]: disabled || loading,
       'w-full': fullWidth
     },
     customStyles
