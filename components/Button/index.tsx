@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import Loader from './Loader';
 
 export type ButtonProps = {
+  type?: 'button' | 'submit' | 'reset' | 'menu'
   variant?: 'solid' | 'outline' | 'link';
   size?: 'sm' | 'md' | 'lg';
   color?: 'blue' | 'gray' | 'red' | 'green' | 'purple' | 'orange' | 'teal' | 'pink' | 'indigo' | 'yellow';
@@ -18,9 +19,11 @@ export type ButtonProps = {
   fullWidth?: boolean;
   customStyles?: string;
   children: React.ReactNode;
+  onClick: Function;
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 const Button: React.FC<ButtonProps> = ({
+  type = 'button',
   variant = 'solid',
   size = 'md',
   color = 'blue',
@@ -130,6 +133,7 @@ const Button: React.FC<ButtonProps> = ({
 
   return (
     <button
+      type={type}
       className={buttonStyles}
       disabled={disabled || loading}
       {...props}
