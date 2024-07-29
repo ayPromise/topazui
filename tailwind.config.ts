@@ -67,8 +67,8 @@ const config: Config = {
 
       keyframes: {
         wiggle: {
-          "0%, 100%": { transform: "rotate(-3deg)" },
-          "50%": { transform: "rotate(3deg)" }
+          "0%, 100%": { transform: "rotate(-7deg)" },
+          "50%": { transform: "rotate(5deg)" }
         },
         click: {
           '0%, 100%': { transform: 'scale(1)' },
@@ -80,8 +80,7 @@ const config: Config = {
         'spin-faster': 'spin 0.65s linear infinite',
         'wiggle': 'wiggle 200ms ease-in-out',
         'click': 'click 50ms linear'
-      }
-
+      },
     },
   },
   plugins: [],
