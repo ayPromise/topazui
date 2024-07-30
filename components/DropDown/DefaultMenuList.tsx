@@ -19,7 +19,7 @@ const DefaultMenuList: React.FC<DefaultMenuListProps> = ({ items }) => {
             {items.map((item, index) => {
                 const itemStyles = clsx("block w-full px-4 py-2 hover:bg-gray-400 hover:text-gray-text cursor-pointer first:rounded-t last:rounded-b",
                     {
-                        "py-3 border-gray-300 border-b-2 border-t-2 first:border-t-0 last:border-b-0": item.isSeparated
+                        "border-gray-300 border-b-2 border-t-2 first:border-t-0 last:border-b-0": item.isSeparated
                     }
                 )
 

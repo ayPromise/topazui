@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from "@storybook/react"
 import DropDown from "."
 import Button from "../Button"
-import { ChevronDownIcon } from "@heroicons/react/24/solid"
+import { ChevronRightIcon, ChevronDownIcon, ChevronLeftIcon } from "@heroicons/react/24/solid"
 import ExampleMenu from "./exampleMenu"
 const meta: Meta<typeof DropDown> = {
     title: "Components/DropDown",
@@ -15,6 +15,9 @@ type Story = StoryObj<typeof meta>
 
 export const Basic: Story = {
     args: {
+        HeaderComponent: <Button className="justify-around" clickAnimation={false} hoverEffect="none">Menu <ChevronDownIcon width={20} /></Button>,
+        alignSide: "center",
+        shownBy: "hover",
         items: [
             {
                 title: "First item",
@@ -30,7 +33,7 @@ export const Basic: Story = {
             },
             {
                 NestedDropDownMenu: <DropDown
-                    HeaderComponent={<div>Price</div>}
+                    HeaderComponent={<div className="flex justify-between"> Price <ChevronRightIcon width={20} /></div>}
                     items={[{ title: "First item", path: "fourth/first" }, {
                         title: "Second item",
                         path: "about/you"
@@ -38,23 +41,19 @@ export const Basic: Story = {
                         title: "Third item",
                         action: () => alert("You pressed the option")
                     },]}
-                    arrowIcon={true}
 
                     alignSide='right'
-                    shownBy="hover"
+                    shownBy="click"
                 />,
                 isSeparated: true,
             }
         ],
-        HeaderComponent: <Button clickAnimation={false} hoverEffect="none">Menu</Button>,
-        arrowIcon: true,
-        alignSide: 'center'
     }
 }
 
 export const Custom: Story = {
     args: {
-        HeaderComponent: <div>Price</div>,
+        HeaderComponent: <div>Price </div>,
         MenuComponent: <ExampleMenu></ExampleMenu>,
         shownBy: 'hover'
     }
