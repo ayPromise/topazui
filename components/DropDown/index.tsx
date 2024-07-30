@@ -11,6 +11,10 @@ export type DropDownProps = {
     alignSide?: 'left' | 'center' | 'right';
     items: ItemProps[];
     shownBy?: 'click' | 'hover';
+    animation?: 'fade' | 'fadeSlide' | 'none';
+    selectFlag?: boolean;
+    selectIndicator?: React.ReactNode;
+    selectedStyles?: string;
     className?: string;
 };
 
@@ -21,6 +25,10 @@ const DropDown: React.FC<DropDownProps> = ({
     alignSide = 'center',
     items,
     shownBy = 'click',
+    animation = 'fadeSlide',
+    selectFlag = false,
+    selectIndicator,
+    selectedStyles,
     className
 }) => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -45,21 +53,31 @@ const DropDown: React.FC<DropDownProps> = ({
         }
     };
 
+    const isItLeftSideMenu = alignSide === 'left'
+    const isItCenteredMenu = alignSide === 'center'
+    const isItRightSideMenu = alignSide === 'right'
+
+    const isAnimationSlideOn = animation === 'fadeSlide'
+    const isAnimationFadeOn = animation === 'fade'
+
     const menuComponentStyles = clsx(
         'absolute min-w-full',
         {
-            'top-0 right-[calc(100%+0.5rem)]': alignSide === 'left',
-            'top-[calc(100%+0.5rem)]': alignSide === 'center',
-            'top-0 left-[calc(100%+0.5rem)]': alignSide === 'right',
+            'top-0 right-[calc(100%+0.5rem)]': isItLeftSideMenu,
+            'top-[calc(100%+0.5rem)]': isItCenteredMenu,
+            'top-0 left-[calc(100%+0.5rem)]': isItRightSideMenu,
 
-            'visible animate-fadeInDown': isOpen && alignSide === 'center',
-            'animate-fadeOutUp opacity-0': !isOpen && alignSide === 'center',
+            'pointer-events-none': !isOpen,
 
-            'visible animate-fadeInRight': isOpen && alignSide === 'right',
-            'animate-fadeOutLeft opacity-0': !isOpen && alignSide === 'right',
+            'visible animate-fadeInLeft': isAnimationSlideOn && isOpen && isItLeftSideMenu,
+            'animate-fadeOutRight opacity-0': isAnimationSlideOn && !isOpen && isItLeftSideMenu,
 
-            'visible animate-fadeInLeft': isOpen && alignSide === 'left',
-            'animate-fadeOutRight opacity-0': !isOpen && alignSide === 'left',
+            'visible animate-fadeInDown': isAnimationSlideOn && isOpen && isItCenteredMenu,
+            'animate-fadeOutUp opacity-0': isAnimationSlideOn && !isOpen && isItCenteredMenu,
+
+            'visible animate-fadeInRight': isAnimationSlideOn && isOpen && isItRightSideMenu,
+            'animate-fadeOutLeft opacity-0': isAnimationSlideOn && !isOpen && isItRightSideMenu,
+
 
         },
         menuStyles
@@ -68,12 +86,16 @@ const DropDown: React.FC<DropDownProps> = ({
     return (
         <div ref={dropDownRef} className={clsx('relative inline-flex px-0', className)} onClick={handleClick} onMouseLeave={handleMouseLeave}>
             <div className='relative inline-block cursor-pointer w-full' onClick={(e) => { e.stopPropagation(); handleClick() }} onMouseEnter={handleMouseEnter}>
-                {HeaderComponent}
+                <div className={clsx({ [selectedStyles as string]: isOpen })}>{HeaderComponent}</div>
+                {selectFlag && (selectIndicator || <div className={clsx('absolute bottom-0 left-0 h-0.5 bg-green-solid transition-all duration-300', {
+                    'w-full': isOpen,
+                    'w-0': !isOpen,
+                })}></div>)}
             </div>
 
-            {alignSide == 'center' && <div className='absolute w-full h-[20px] bottom-[-20px]'></div>}
-            {alignSide == 'right' && <div className='absolute w-[20px] h-full bottom-0 right-[-20px]'></div>}
-            {alignSide == 'left' && <div className='absolute w-[20px] h-full bottom-0 left-[-20px]'></div>}
+            {alignSide == 'center' && <div className='absolute w-full h-[40px] bottom-[-35px]'></div>}
+            {alignSide == 'right' && <div className='absolute w-[40px] h-full bottom-0 right-[-35px]'></div>}
+            {alignSide == 'left' && <div className='absolute w-[40px] h-full bottom-0 left-[-35px]'></div>}
 
 
             <div className={menuComponentStyles} onClick={(e) => e.stopPropagation()}>

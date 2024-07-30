@@ -6,7 +6,10 @@ import ExampleMenu from "./exampleMenu"
 const meta: Meta<typeof DropDown> = {
     title: "Components/DropDown",
     component: DropDown,
-    tags: ["autodoc"]
+    tags: ["autodoc"],
+    parameters: {
+        layout: 'centered'
+    }
 }
 
 export default meta
@@ -47,14 +50,18 @@ export const Basic: Story = {
                 />,
                 isSeparated: true,
             }
-        ],
+        ]
     }
 }
 
 export const Custom: Story = {
     args: {
-        HeaderComponent: <div>Price </div>,
-        MenuComponent: <ExampleMenu></ExampleMenu>,
-        shownBy: 'hover'
+        HeaderComponent: <div className="hover:text-green-solid font-bold">Products </div>,
+        MenuComponent: <ExampleMenu />,
+        shownBy: "click",
+        alignSide: 'center',
+        menuStyles: 'top-[calc(100%+1.5rem)]',
+        selectFlag: true,
+        selectedStyles: 'text-green-solid'
     }
 }
