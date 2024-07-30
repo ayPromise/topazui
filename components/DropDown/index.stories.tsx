@@ -16,7 +16,7 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 
-export const Basic: Story = {
+export const Default: Story = {
     args: {
         HeaderComponent: <Button className="justify-around" clickAnimation={false} hoverEffect="none">Menu <ChevronDownIcon width={20} /></Button>,
         alignSide: "center",
@@ -54,7 +54,47 @@ export const Basic: Story = {
     }
 }
 
-export const Custom: Story = {
+export const CustomDefault: Story = {
+    args: {
+        HeaderComponent: <Button className="justify-around" clickAnimation={false} hoverEffect="none">Menu <ChevronDownIcon width={20} /></Button>,
+        alignSide: "center",
+        shownBy: "click",
+        items: [
+            {
+                title: "First item",
+                path: "about/me"
+            },
+            {
+                title: "Second item",
+                path: "about/you"
+            },
+            {
+                title: "Third item",
+                action: () => alert("You pressed the option")
+            },
+            {
+                NestedDropDownMenu: <DropDown
+                    HeaderComponent={<div className="flex justify-between"> Price <ChevronRightIcon width={20} /></div>}
+                    items={[{ title: "First item", path: "fourth/first" }, {
+                        title: "Second item",
+                        path: "about/you"
+                    }, {
+                        title: "Third item",
+                        action: () => alert("You pressed the option")
+                    },]}
+
+                    alignSide='right'
+                    shownBy="click"
+                />,
+                isSeparated: true,
+            }
+        ],
+        menuStyles: "w-[300px] bg-red-solid text-red-text",
+        itemStyles: "hover:bg-black"
+    }
+}
+
+export const AllCustom: Story = {
     args: {
         HeaderComponent: <div className="hover:text-green-solid font-bold">Products </div>,
         MenuComponent: <ExampleMenu />,

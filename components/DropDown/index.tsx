@@ -1,13 +1,13 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import DefaultMenuList, { ItemProps } from './DefaultMenuList';
 import useOutsideEvent from './utils/useOutsideEvent';
 import clsx from 'clsx';
-
 
 export type DropDownProps = {
     HeaderComponent: React.ReactNode;
     MenuComponent?: React.ReactNode;
     menuStyles?: string;
+    itemStyles?: string;
     alignSide?: 'left' | 'center' | 'right';
     items: ItemProps[];
     shownBy?: 'click' | 'hover';
@@ -22,6 +22,7 @@ const DropDown: React.FC<DropDownProps> = ({
     HeaderComponent,
     MenuComponent,
     menuStyles,
+    itemStyles,
     alignSide = 'center',
     items,
     shownBy = 'click',
@@ -32,8 +33,10 @@ const DropDown: React.FC<DropDownProps> = ({
     className
 }) => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
-    const dropDownRef = useRef<HTMLDivElement>(null)
-    useOutsideEvent(dropDownRef, () => setIsOpen(false))
+    const dropDownRef = useRef<HTMLDivElement>(null);
+    const nestedMenuRef = useRef<HTMLDivElement>(null);
+
+    useOutsideEvent(dropDownRef, () => { setIsOpen(false) }, [nestedMenuRef]);
 
     const handleClick = () => {
         if (shownBy === 'click') {
@@ -53,15 +56,15 @@ const DropDown: React.FC<DropDownProps> = ({
         }
     };
 
-    const isItLeftSideMenu = alignSide === 'left'
-    const isItCenteredMenu = alignSide === 'center'
-    const isItRightSideMenu = alignSide === 'right'
+    const isItLeftSideMenu = alignSide === 'left';
+    const isItCenteredMenu = alignSide === 'center';
+    const isItRightSideMenu = alignSide === 'right';
 
-    const isAnimationSlideOn = animation === 'fadeSlide'
-    const isAnimationFadeOn = animation === 'fade'
+    const isAnimationSlideOn = animation === 'fadeSlide';
+    const isAnimationFadeOn = animation === 'fade';
 
     const menuComponentStyles = clsx(
-        'absolute min-w-full',
+        'absolute min-w-full bg-gray-200 shadow-2xl rounded text-sm text-black',
         {
             'top-0 right-[calc(100%+0.5rem)]': isItLeftSideMenu,
             'top-[calc(100%+0.5rem)]': isItCenteredMenu,
@@ -77,8 +80,6 @@ const DropDown: React.FC<DropDownProps> = ({
 
             'visible animate-fadeInRight': isAnimationSlideOn && isOpen && isItRightSideMenu,
             'animate-fadeOutLeft opacity-0': isAnimationSlideOn && !isOpen && isItRightSideMenu,
-
-
         },
         menuStyles
     );
@@ -93,13 +94,12 @@ const DropDown: React.FC<DropDownProps> = ({
                 })}></div>)}
             </div>
 
-            {alignSide == 'center' && <div className='absolute w-full h-[40px] bottom-[-35px]'></div>}
-            {alignSide == 'right' && <div className='absolute w-[40px] h-full bottom-0 right-[-35px]'></div>}
-            {alignSide == 'left' && <div className='absolute w-[40px] h-full bottom-0 left-[-35px]'></div>}
+            {alignSide === 'center' && <div className='absolute w-full h-[40px] bottom-[-35px]'></div>}
+            {alignSide === 'right' && <div className='absolute w-[40px] h-full bottom-0 right-[-35px]'></div>}
+            {alignSide === 'left' && <div className='absolute w-[40px] h-full bottom-0 left-[-35px]'></div>}
 
-
-            <div className={menuComponentStyles} onClick={(e) => e.stopPropagation()}>
-                {MenuComponent || < DefaultMenuList items={items} />}
+            <div ref={nestedMenuRef} className={menuComponentStyles} onClick={(e) => e.stopPropagation()}>
+                {MenuComponent || <DefaultMenuList items={items} customItemStyles={itemStyles} />}
             </div>
         </div>
     );

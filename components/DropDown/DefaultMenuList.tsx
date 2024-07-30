@@ -11,16 +11,18 @@ export type ItemProps = {
 
 type DefaultMenuListProps = {
     items: ItemProps[];
+    customItemStyles?: string;
 };
 
-const DefaultMenuList: React.FC<DefaultMenuListProps> = ({ items }) => {
+const DefaultMenuList: React.FC<DefaultMenuListProps> = ({ items, customItemStyles }) => {
     return (
-        <ul className='bg-gray-200 shadow-2xl rounded text-sm text-black'>
+        <ul>
             {items.map((item, index) => {
                 const itemStyles = clsx("block w-full min-w-[130px] px-4 py-2 hover:bg-gray-400 hover:text-gray-text cursor-pointer first:rounded-t last:rounded-b",
                     {
                         "border-gray-300 border-b-2 border-t-2 first:border-t-0 last:border-b-0": item.isSeparated
-                    }
+                    },
+                    customItemStyles
                 )
 
                 if (item.NestedDropDownMenu) {
