@@ -20,7 +20,7 @@ export type InputProps = {
     error?: boolean;
     errorMessage?: string;
     fullWidth?: boolean;
-    customStyles?: string;
+    className?: string;
 } & React.InputHTMLAttributes<HTMLInputElement>;
 
 const Input: React.FC<InputProps> = ({
@@ -41,7 +41,7 @@ const Input: React.FC<InputProps> = ({
     error = false,
     errorMessage = '',
     fullWidth = false,
-    customStyles,
+    className,
     ...props
 }) => {
     const baseStyles = 'rounded border-gray-solid border-2 p-2 focus:outline-none';
@@ -64,7 +64,7 @@ const Input: React.FC<InputProps> = ({
             [withIconStyles]: readyIcon !== "none" || customIcon,
             "w-full": fullWidth
         },
-        customStyles
+        className
     );
 
     const labelStyles = clsx(
