@@ -1,6 +1,7 @@
 export type RadioCustomStyles = {
     title?: string;
     description?: string;
+    mainContainer?:string;
     radioContainer?:string;
     option?: string;
     radioButton?:string;
@@ -12,5 +13,6 @@ export type RadioCustomStyles = {
                 title?:string;
                 description?:string;
                 option?:string;
-            }
+            },
+    header?:string;
 }

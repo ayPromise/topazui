@@ -54,6 +54,7 @@ export const DefaultWithStyles: Story = {
 export const Custom: Story = {
     args: {
         name: 'payment',
+        header: 'Choose payment method',
 
         options: [
             { title: "Daily", value: "Daily", description: "Good for small websites" },
@@ -68,7 +69,8 @@ export const Custom: Story = {
             label: "peer-checked:text-green-solid peer-checked:border-green-solid",
             disabled: {
                 option: "opacity-30 pointer-events-none"
-            }
+            },
+            header: "mb-4 text-green-solid font-bold",
         },
 
         direction: "row",
