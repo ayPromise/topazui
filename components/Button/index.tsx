@@ -1,4 +1,3 @@
-// components/Button/index.tsx
 import React from 'react';
 import clsx from 'clsx';
 import Loader from './Loader';
@@ -9,7 +8,7 @@ export type ButtonProps = {
   size?: 'sm' | 'md' | 'lg';
   color?: 'blue' | 'gray' | 'red' | 'green' | 'purple' | 'orange' | 'teal' | 'pink' | 'indigo' | 'yellow';
   transition?: 'smooth' | 'quick' | 'none';
-  hoverEffect?: 'scale' | 'wiggle' | 'none';
+  hoverEffect?: 'scale' | 'none';
   clickAnimation?: boolean;
   disabled?: boolean;
   loading?: boolean;
@@ -17,9 +16,9 @@ export type ButtonProps = {
   loadingText?: string;
   customLoader?: React.ReactNode;
   fullWidth?: boolean;
-  customStyles?: string;
+  className?: string;
   children: React.ReactNode;
-  onClick: Function;
+  onClick?: Function;
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 const Button: React.FC<ButtonProps> = ({
@@ -36,11 +35,11 @@ const Button: React.FC<ButtonProps> = ({
   loadingText = "Submiting",
   customLoader = null,
   fullWidth = false,
-  customStyles,
+  className,
   children,
   ...props
 }) => {
-  const baseStyles = 'flex items-center justify-center rounded';
+  const baseStyles = 'flex px-4 py-2 items-center justify-center rounded';
 
   const colorScheme = {
     blue: {
@@ -110,7 +109,6 @@ const Button: React.FC<ButtonProps> = ({
   }
 
   const hoverEffectStyles = {
-    wiggle: "hover:animate-wiggle",
     scale: "hover:scale-95",
     none: ""
   }
@@ -129,7 +127,7 @@ const Button: React.FC<ButtonProps> = ({
       [disabledStyles]: disabled || loading,
       'w-full': fullWidth
     },
-    customStyles
+    className
   );
 
   const deafultLoaderColor = "border" + buttonStyles.split(" ").find(part => part.startsWith("text-") && part !== "text-base")?.slice(4)

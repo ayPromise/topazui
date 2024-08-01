@@ -5,7 +5,10 @@ import { action } from '@storybook/addon-actions';
 const meta: Meta<typeof Button> = {
     title: 'Components/Button',
     component: Button,
-    tags: ["autodoc"]
+    tags: ["autodoc"],
+    parameters: {
+        layout: 'centered'
+    }
 };
 
 export default meta
@@ -69,7 +72,7 @@ export const Loading: Story = {
 export const Custom: Story = {
     args: {
         children: "Custom text",
-        customStyles: "bg-teal-200 hover:bg-red-500 disabled:bg-gray-500",
+        className: "bg-teal-200 hover:bg-red-500 disabled:bg-gray-500",
         loadingText: "Custom text",
         customLoader: <div className='w-3 h-3 animate-spin bg-black'></div>,
         onClick: action("button-clicked"),
