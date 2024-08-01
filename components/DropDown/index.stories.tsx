@@ -20,7 +20,7 @@ export const Default: Story = {
     args: {
         HeaderComponent: <Button className="justify-around" clickAnimation={false} hoverEffect="none">Menu <ChevronDownIcon width={20} /></Button>,
         alignSide: "center",
-        shownBy: "hover",
+        shownBy: "click",
         items: [
             {
                 title: "First item",
@@ -89,8 +89,10 @@ export const CustomDefault: Story = {
                 isSeparated: true,
             }
         ],
-        menuStyles: "w-[300px] bg-red-solid text-red-text",
-        itemStyles: "hover:bg-black"
+        customStyles: {
+            menu: "w-[300px] bg-red-solid text-red-text",
+            item: "hover:bg-black"
+        }
     }
 }
 
@@ -100,8 +102,10 @@ export const AllCustom: Story = {
         MenuComponent: <ExampleMenu />,
         shownBy: "click",
         alignSide: 'center',
-        menuStyles: 'top-[calc(100%+1.5rem)]',
+        customStyles: {
+            menu: 'top-[calc(100%+1.5rem)]',
+            selectedItems: 'text-green-solid'
+        },
         selectFlag: true,
-        selectedStyles: 'text-green-solid'
     }
 }

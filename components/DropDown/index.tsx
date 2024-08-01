@@ -1,35 +1,32 @@
 import React, { useRef, useState } from 'react';
 import DefaultMenuList, { ItemProps } from './DefaultMenuList';
-import useOutsideEvent from './utils/useOutsideEvent';
+import useOutsideEvent from '@/utils/useOutsideEvent';
 import clsx from 'clsx';
+import { DropDownCustomStyles } from './types';
 
 export type DropDownProps = {
     HeaderComponent: React.ReactNode;
     MenuComponent?: React.ReactNode;
-    menuStyles?: string;
-    itemStyles?: string;
     alignSide?: 'left' | 'center' | 'right';
     items: ItemProps[];
     shownBy?: 'click' | 'hover';
     animation?: 'fade' | 'fadeSlide' | 'none';
     selectFlag?: boolean;
     selectIndicator?: React.ReactNode;
-    selectedStyles?: string;
+    customStyles?: DropDownCustomStyles;
     className?: string;
 };
 
 const DropDown: React.FC<DropDownProps> = ({
     HeaderComponent,
     MenuComponent,
-    menuStyles,
-    itemStyles,
     alignSide = 'center',
     items,
     shownBy = 'click',
     animation = 'fadeSlide',
     selectFlag = false,
     selectIndicator,
-    selectedStyles,
+    customStyles,
     className
 }) => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -81,13 +78,13 @@ const DropDown: React.FC<DropDownProps> = ({
             'visible animate-fadeInRight': isAnimationSlideOn && isOpen && isItRightSideMenu,
             'animate-fadeOutLeft opacity-0': isAnimationSlideOn && !isOpen && isItRightSideMenu,
         },
-        menuStyles
+        customStyles?.menu
     );
 
     return (
-        <div ref={dropDownRef} className={clsx('relative inline-flex px-0', className)} onClick={handleClick} onMouseLeave={handleMouseLeave}>
+        <div ref={dropDownRef} className={clsx('relative inline-flex px-0', customStyles?.dropDown, className)} onClick={handleClick} onMouseLeave={handleMouseLeave}>
             <div className='relative inline-block cursor-pointer w-full' onClick={(e) => { e.stopPropagation(); handleClick() }} onMouseEnter={handleMouseEnter}>
-                <div className={clsx({ [selectedStyles as string]: isOpen })}>{HeaderComponent}</div>
+                <div className={clsx({ [customStyles?.selectedItems as string]: isOpen })}>{HeaderComponent}</div>
                 {selectFlag && (selectIndicator || <div className={clsx('absolute bottom-0 left-0 h-0.5 bg-green-solid transition-all duration-300', {
                     'w-full': isOpen,
                     'w-0': !isOpen,
@@ -99,7 +96,7 @@ const DropDown: React.FC<DropDownProps> = ({
             {alignSide === 'left' && <div className='absolute w-[40px] h-full bottom-0 left-[-35px]'></div>}
 
             <div ref={nestedMenuRef} className={menuComponentStyles} onClick={(e) => e.stopPropagation()}>
-                {MenuComponent || <DefaultMenuList items={items} customItemStyles={itemStyles} />}
+                {MenuComponent || <DefaultMenuList items={items} customItemStyles={customStyles?.item} />}
             </div>
         </div>
     );

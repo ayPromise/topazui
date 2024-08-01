@@ -27,8 +27,10 @@ const DefaultMenuList: React.FC<DefaultMenuListProps> = ({ items, customItemStyl
 
                 if (item.NestedDropDownMenu) {
                     const NestedDropDown = item.NestedDropDownMenu
-                        ? React.cloneElement(item.NestedDropDownMenu, { key: `nested-${index}`, className: clsx(itemStyles, item.NestedDropDownMenu.props.className) })
+                        ? React.cloneElement(item.NestedDropDownMenu, { key: `nested-${index}`, className: clsx(itemStyles) })
                         : null;
+
+                    console.log(NestedDropDown)
 
                     return NestedDropDown
                 }
