@@ -5,7 +5,10 @@ import Input from '.';
 const meta: Meta<typeof Input> = {
     title: 'Components/Input',
     component: Input,
-    tags: ["autodoc"]
+    tags: ["autodoc"],
+    parameters: {
+        layout: 'centered'
+    }
 };
 
 export default meta
@@ -25,7 +28,9 @@ export const Email: Story = {
         placeholder: "Enter your email",
         readyIconVariant: "outline",
         readyIcon: "email",
-        iconBackgroundStyle: "separate"
+        customStyles: {
+            iconBackground: "separate"
+        }
     }
 };
 
@@ -38,7 +43,9 @@ export const Error: Story = {
         error: true,
         errorMessage: "Enter valid password",
         readyIcon: "password",
-        iconBackgroundStyle: "separate"
+        customStyles: {
+            iconBackground: "separate"
+        }
     }
 };
 
@@ -47,7 +54,9 @@ export const Custom: Story = {
         type: "text",
         placeholder: "Enter book",
         customIcon: <BuildingOfficeIcon width={30} />,
-        customIconBackgroundStyle: "bg-gray-solid border-black border-r-2",
-        customStyles: "bg-gray-solid"
+        customStyles: {
+            iconBackground: "bg-gray-solid border-black border-r-2",
+            inputStyles: "bg-gray-solid"
+        }
     }
 };

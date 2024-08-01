@@ -1,6 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import Icon from './Icon';
+import { InputCustomStyles } from './types';
 
 export type InputProps = {
     type?: 'text' | 'password' | 'email' | 'number';
@@ -15,12 +16,11 @@ export type InputProps = {
     customIcon?: React.ReactNode;
     readyIcon?: 'username' | 'email' | 'password' | 'none';
     readyIconVariant?: 'solid' | 'outline';
-    iconBackgroundStyle?: 'separate' | 'flat';
-    customIconBackgroundStyle?: string;
+    iconBackgroundVariant?: 'separate' | 'flat';
     error?: boolean;
     errorMessage?: string;
     fullWidth?: boolean;
-    className?: string;
+    customStyles?: InputCustomStyles;
 } & React.InputHTMLAttributes<HTMLInputElement>;
 
 const Input: React.FC<InputProps> = ({
@@ -36,12 +36,11 @@ const Input: React.FC<InputProps> = ({
     customIcon,
     readyIcon = 'none',
     readyIconVariant = 'outline',
-    iconBackgroundStyle = 'flat',
-    customIconBackgroundStyle,
+    iconBackgroundVariant = 'flat',
     error = false,
     errorMessage = '',
     fullWidth = false,
-    className,
+    customStyles,
     ...props
 }) => {
     const baseStyles = 'rounded border-gray-solid border-2 p-2 focus:outline-none';
@@ -64,7 +63,7 @@ const Input: React.FC<InputProps> = ({
             [withIconStyles]: readyIcon !== "none" || customIcon,
             "w-full": fullWidth
         },
-        className
+        customStyles?.inputStyles
     );
 
     const labelStyles = clsx(
@@ -88,7 +87,7 @@ const Input: React.FC<InputProps> = ({
                     className={inputStyles}
                     {...props}
                 />
-                <Icon iconVariant={readyIconVariant} icon={readyIcon} isError={error} customIcon={customIcon} backgroundStyle={customIconBackgroundStyle || iconBackgroundStyle} />
+                <Icon iconVariant={readyIconVariant} icon={readyIcon} isError={error} customIcon={customIcon} backgroundStyle={customStyles?.iconBackground || iconBackgroundVariant} />
             </div>
             {error && errorMessage &&
                 <span className="mt-1 text-sm text-red-solid">{errorMessage}</span>
