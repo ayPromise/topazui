@@ -28,9 +28,9 @@ const SelectButton: React.FC<{
         const placeholderStyles = clsx('text-gray-400', customStyles.singleValue);
         const selectedMultiValue = clsx('flex items-center m-1 bg-gray-100 p-1 rounded', customStyles.multiValue);
         const selectedSingleValueStyles = clsx('', customStyles.singleValue);
-        const clearIndicatorStyles = clsx('ml-2 cursor-pointer', customStyles.clearIndicator);
-        const indicatorsContainerStyles = clsx('flex items-center', customStyles.indicatorsContainer);
-        const dropDownIndicatorStyles = clsx('cursor-pointer ml-2', customStyles.dropdownIndicator);
+        const clearIndicatorStyles = clsx('cursor-pointer ml-2 hover:opacity-35', customStyles.clearIndicator);
+        const indicatorsContainerStyles = clsx('flex items-center border-l-2 h-full', customStyles.indicatorsContainer);
+        const dropDownIndicatorStyles = clsx('cursor-pointer ml-2 hover:opacity-35', customStyles.dropdownIndicator);
 
         return (
             <div

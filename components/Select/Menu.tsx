@@ -27,9 +27,9 @@ const Menu: React.FC<{
             !selectedOptions.some(selected => selected.value === option.value)
         ) : options;
         return (
-            <div className={clsx('absolute mt-1 w-full border rounded shadow-lg', customStyles.menuList)}>
+            <div className={clsx('absolute mt-1 w-full border shadow-lg', customStyles.menuList)}>
 
-                {loading && <div className={clsx('p-2', customStyles.loadingMessage)}>{loadingMessage}</div>}
+                {loading && filteredOptions.length === 0 && <div className={clsx('p-2', customStyles.loadingMessage)}>{loadingMessage}</div>}
 
                 {filteredOptions.length === 0 && !loading && <div className={clsx('p-2', customStyles.noOptions)}>{noOptionsMessage}</div>}
 

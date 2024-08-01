@@ -16,7 +16,7 @@ const OptionComponent: React.FC<OptionProps> = ({ option, isSelected, onClick, c
     }
     return (
         <div
-            className={clsx('p-2 cursor-pointer bg-gray-200 hover:bg-gray-300 first:rounded-t last:rounded-b', customStyles, {
+            className={clsx('p-2 cursor-pointer bg-gray-200 hover:bg-gray-300', customStyles, {
                 'bg-gray-400 text-white pointer-events-none': isSelected,
                 'bg-gray-400 pointer-events-none cursor-not-allowed opacity-50': option.isDisabled
             })}

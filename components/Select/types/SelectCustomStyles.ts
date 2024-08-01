@@ -16,4 +16,7 @@ export type SelectCustomStyles = {
     noOptions?: string;
     option?:string;
     label?:string;
+    selectError?:string;
+    errorMessage?:string;
+    errorLabel?:string;
 }

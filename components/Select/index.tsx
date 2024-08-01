@@ -18,6 +18,8 @@ export type SelectProps = {
     value?: Option | Option[];
     label?: string;
     name?: string;
+    isError?: boolean;
+    errorMessage?: string;
 };
 
 const Select: React.FC<SelectProps> = ({
@@ -31,7 +33,9 @@ const Select: React.FC<SelectProps> = ({
     components = {},
     onChange,
     value,
-    label
+    label,
+    isError = false,
+    errorMessage
 }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
@@ -64,7 +68,14 @@ const Select: React.FC<SelectProps> = ({
         setSelectedOptions([]);
         onChange && onChange(isMulti ? [] : null);
     };
-    const labelStyles = clsx("block mb-1 ml-1 font-bold", customStyles.label)
+
+    const labelStyles = clsx("block mb-1 ml-1", customStyles.label, { 'text-red-solid': isError && !customStyles.errorLabel }, customStyles.errorLabel)
+    const errorMessageStyle = clsx({
+        'text-red-solid pl-1 pt-1': !customStyles.errorMessage
+    },
+        customStyles.errorMessage)
+
+    customStyles.selectButton = clsx(customStyles.selectButton, { "border-2 border-red-solid text-red-solid": isError && !isOpen && !customStyles.selectError }, customStyles.selectError)
 
     return (
         <div className={clsx('relative min-w-[250px] max-w-[350px]', customStyles.selectContainer)} ref={selectRef}>
@@ -80,6 +91,7 @@ const Select: React.FC<SelectProps> = ({
                 handleOptionClick={handleOptionClick}
                 handleClear={handleClear}
             />
+            {errorMessage && !isOpen && <div className={errorMessageStyle}>{errorMessage}</div>}
             {isOpen && (
                 <Menu
                     options={options}
