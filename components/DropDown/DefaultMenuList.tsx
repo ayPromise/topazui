@@ -1,5 +1,6 @@
 import React, { MouseEventHandler } from 'react';
 import clsx from 'clsx';
+import Link from 'next/link';
 
 export type ItemProps = {
     title?: string;
@@ -36,8 +37,8 @@ const DefaultMenuList: React.FC<DefaultMenuListProps> = ({ items, customItemStyl
                 }
 
                 if (item.path)
-                    return <a key={item.path} className={itemStyles} href={item.path} >
-                        {item.title}</a>
+                    return <Link key={item.path} className={itemStyles} href={item.path} >
+                        {item.title}</Link>
 
                 return <div key={item.title} className={itemStyles} onClick={item.action}>
                     {item.title}
