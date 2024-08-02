@@ -54,9 +54,11 @@ export const Custom: Story = {
         type: "text",
         placeholder: "Enter book",
         customIcon: <BuildingOfficeIcon width={30} />,
+
         customStyles: {
-            iconBackground: "bg-gray-solid border-black border-r-2",
-            inputStyles: "bg-gray-solid"
-        }
+            iconBackground: "bg-gray-solid border-gray-400 border-r-2 text-gray-400",
+            inputStyles: "bg-gray-solid",
+
+        },
     }
 };
