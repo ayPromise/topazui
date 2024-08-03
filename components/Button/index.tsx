@@ -4,7 +4,6 @@ import Loader from './components/Loader';
 import { buttonVariants, ButtonVariants } from './styles/Button.variants';
 
 export type ButtonCustomProps<E extends ElementType = ElementType> = {
-  clickAnimation?: boolean;
   loading?: boolean;
   sideOfLoader?: 'left' | 'centerAlone' | 'right';
   loadingText?: string;
