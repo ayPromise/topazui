@@ -1,7 +1,7 @@
 import React, { ComponentProps, ElementType } from 'react';
 import clsx from 'clsx';
 import Loader from './components/Loader';
-import { buttonVariants, ButtonVariants } from './styles/Button.variants';
+import { buttonVariants, ButtonVariantsType } from './styles/Button.variants';
 
 export type ButtonCustomProps<E extends ElementType = ElementType> = {
   loading?: boolean;
@@ -13,14 +13,7 @@ export type ButtonCustomProps<E extends ElementType = ElementType> = {
   children?: React.ReactNode;
   className?: string;
   as?: E;
-} & ButtonVariants & {
-  variant?: 'solid' | 'outline' | 'link';
-  size?: 'sm' | 'md' | 'lg';
-  color?: 'blue' | 'gray' | 'red' | 'green' | 'purple' | 'orange' | 'teal' | 'pink' | 'indigo' | 'yellow';
-  transition?: 'smooth' | 'quick' | 'none';
-  hoverEffect?: 'scale' | 'none';
-  clickAnimation?: boolean;
-};
+} & ButtonVariantsType;
 
 interface ButtonWithForwardRef extends React.FC<ButtonCustomProps<ElementType>> {
   <E extends ElementType>(props: ButtonCustomProps<E> & { ref?: React.Ref<any> }): ReturnType<React.FC<ButtonCustomProps<E>>>

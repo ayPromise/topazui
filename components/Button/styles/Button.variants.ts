@@ -95,4 +95,11 @@ export const buttonVariants = cva(
   }
 );
 
-export type ButtonVariants = VariantProps<typeof buttonVariants>
+export type ButtonVariantsType = VariantProps<typeof buttonVariants> & {
+  variant?: 'solid' | 'outline' | 'link';
+  size?: 'sm' | 'md' | 'lg';
+  color?: 'blue' | 'gray' | 'red' | 'green' | 'purple' | 'orange' | 'teal' | 'pink' | 'indigo' | 'yellow';
+  transition?: 'smooth' | 'quick' | 'none';
+  hoverEffect?: 'scale' | 'none';
+  clickAnimation?: boolean;
+}
