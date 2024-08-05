@@ -1,6 +1,7 @@
 import React, { ComponentProps, ElementType, OptionHTMLAttributes } from 'react'
 import useSelect from '../context/useSelect'
 import { OptionType } from '../types';
+import { tv } from 'tailwind-variants';
 
 type OptionCustomProps<E extends ElementType = ElementType> = {
     children: string;
@@ -12,7 +13,7 @@ type OptionProps<E extends ElementType> = OptionCustomProps<E> & Omit<ComponentP
 
 const defaultElementType = 'option'
 
-const Option = <E extends ElementType = typeof defaultElementType>({ children, value, disabled, as: Component = defaultElementType as E, ...props }: OptionProps<E>) => {
+const Option = <E extends ElementType = typeof defaultElementType>({ children, className, value, disabled, as: Component = defaultElementType as E, ...props }: OptionProps<E>) => {
     const { selectedOptions, setSelectedOptions, isMultiple, setIsOpen } = useSelect()
     const option: OptionType = {
         title: children,
@@ -20,7 +21,19 @@ const Option = <E extends ElementType = typeof defaultElementType>({ children, v
         disabled
     }
 
-    const style = selectedOptions.some(o => o.value === option.value) && 'bg-gray-300 pointer-events-none'
+    const selected = selectedOptions.some(o => o.value === option.value)
+
+    console.log(selected)
+
+    const optionStyles = tv({
+        base: 'bg-white hover:bg-gray-200 cursor-pointer p-2 selected:bg-gray-200',
+        variants: {
+            disabled: {
+                true: 'opacity-50 pointer-events-none',
+                false: ''
+            }
+        }
+    })
 
 
     const handleSelect = () => {
@@ -29,7 +42,7 @@ const Option = <E extends ElementType = typeof defaultElementType>({ children, v
             setSelectedOptions([option])
     }
     //@ts-ignore
-    return <Component className={`bg-white hover:bg-gray-200 cursor-pointer p-2 ${style}`} onClick={handleSelect} {...props}>{children}</Component>
+    return <Component className={optionStyles({ selected, disabled, className })} onClick={handleSelect} {...props}>{children}</Component>
 
 }
 

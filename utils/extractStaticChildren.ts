@@ -1,18 +1,12 @@
 import React from "react";
 
-const extractStaticChildren = (children:React.ReactNode, staticComponents:React.FC<any>[])=>{
-    if (!children) {
-        return {};
-    }
-    // @ts-ignore
+const extractStaticChildren = (children: React.ReactNode, staticComponents: React.FC<any>[]) => {
+    //@ts-ignore
+    const childElements = (children && children.type===React.Fragment) ? React.Children.toArray(children.props.children) :React.Children.toArray(children)
+    const extractedComponents: { [componentName: string]: React.ReactNode } = {};
 
-    const childElements = Array.isArray(children.props.children) ? children.props.children as React.ReactNode[] : children
-    
-    const extractedComponents :{
-        [componentName:string] : React.ReactNode
-    }= {}
 
-    const processChildElement = (child: React.ReactNode) => {
+    childElements.forEach((child) => {
         if (React.isValidElement(child)) {
             staticComponents.forEach((StaticComponent) => {
                 if (child.type === StaticComponent) {
@@ -20,18 +14,9 @@ const extractStaticChildren = (children:React.ReactNode, staticComponents:React.
                 }
             });
         }
-    };
+    });
 
-    if(Array.isArray(childElements))
-        childElements.forEach((child) => {
-            if (React.isValidElement(child)) {
-                processChildElement(child)
-            }
-        });
-    else
-        processChildElement(childElements)
+    return extractedComponents;
+};
 
-    return extractedComponents
-}
-
-export default extractStaticChildren
+export default extractStaticChildren;

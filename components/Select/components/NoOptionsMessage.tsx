@@ -13,7 +13,7 @@ const defaultElementType = 'div'
 
 const NoOptionsMessage = <E extends ElementType = typeof defaultElementType>({ className, as: Component = defaultElementType as E, ...props }: NoOptionsMessageProps<E>) => {
 
-    const errorStyles = tv({ base: 'text-red-solid font-bold' })
+    const errorStyles = tv({ base: 'absolute text-red-solid font-bold' })
     //@ts-ignore
     return <Component className={errorStyles({ className })} {...props} />
 
