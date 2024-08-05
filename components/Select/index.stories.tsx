@@ -24,24 +24,29 @@ export const Default: Story = {
                 <Select.Option value={"second"}>Second Item</Select.Option>
             </Select.Menu>
             <Select.NoOptionMessage>Fuck</Select.NoOptionMessage>
-        </>
+        </>,
+
+        error: false
     }
 }
 
 export const Custom: Story = {
     args: {
         children: <>
-            <Select.Button className="bg-green-300 border-0"></Select.Button>
+            <Select.Button className="rounded bg-gray-500 text-gray-text border-2 border-gray-300">
 
-            <Select.IconsContainer className="bg-green-solid">
-                <Select.IconsContainer.DropDownIcon className="bg-red-solid">
-                    <ChevronDoubleDownIcon width={18}></ChevronDoubleDownIcon>
-                </Select.IconsContainer.DropDownIcon>
-            </Select.IconsContainer>
+                <Select.IconsContainer className="text-black h-full">
+                    <Select.IconsContainer.DropDownIcon className="bg-gray-200 w-[30px]">
+                        <ChevronDoubleDownIcon width={18} />
+                    </Select.IconsContainer.DropDownIcon>
+                    <Select.IconsContainer.ClearIcon className="text-white" />
+                </Select.IconsContainer>
 
-            <Select.Menu>
-                <Select.Option value={"first"}>First Item</Select.Option>
-                <Select.Option value={"second"}>Second Item</Select.Option>
+            </Select.Button>
+
+            <Select.Menu className="rounded bg-slate-200 space-y-[2px] text-white">
+                <Select.Option value={"first"} className="bg-gray-500 hover:text-gray-500">First Item</Select.Option>
+                <Select.Option value={"second"} className="bg-gray-500 hover:text-gray-500">Second Item</Select.Option>
             </Select.Menu>
 
             <Select.NoOptionMessage className="text-orange-400">Fuck</Select.NoOptionMessage>

@@ -1,16 +1,9 @@
-import React, { SelectHTMLAttributes, useRef, useState } from 'react';
-import Error from './components/Error'
-import Option from './components/Option'
+import React, { SelectHTMLAttributes, useRef } from 'react';
 import extractStaticChildren from '@/utils/extractStaticChildren';
-import SelectButton from './components/SelectButton/SelectButton';
 import useOutsideEvent from '@/hooks/useOutsideEvent';
 import SelectProvider from './context/SelectContext';
 import useSelect from './context/useSelect';
-import Menu from './components/Menu';
-import NoOptionsMessage from './components/NoOptionsMessage';
-import DropDownIcon from './components/SelectButton/DropDownIcon';
-import ClearIcon from './components/SelectButton/ClearIcon';
-import IconsContainer from './components/SelectButton/IconsContainer';
+import { IconsContainer, Menu, NoOptionsMessage, SelectButton, Option, Error } from './components';
 
 export type SelectProps = {
     children: React.ReactNode;
@@ -22,10 +15,9 @@ const SelectComponent: React.FC<SelectProps> = ({ children }) => {
     const selectRef = useRef<HTMLDivElement>(null);
     useOutsideEvent(selectRef, () => setIsOpen(false));
 
-    const { noOptionsMessage: noOptionsElement, menu: menuElement, selectButton: selectButtonElement, iconsContainer: iconsContainerElement } = extractStaticChildren(children, [NoOptionsMessage, Menu, SelectButton, IconsContainer])
+    const { noOptionsMessage: noOptionsElement, menu: menuElement, selectButton: selectButtonElement } = extractStaticChildren(children, [NoOptionsMessage, Menu, SelectButton])
 
     return <div className='relative select-none' ref={selectRef}>
-        {iconsContainerElement || <IconsContainer />}
         {selectButtonElement || <SelectButton />}
         {menuElement}
         {error && noOptionsElement}
