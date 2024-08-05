@@ -1,111 +1,49 @@
-import React, { useState, useRef } from 'react';
-import clsx from 'clsx';
-import useOutsideEvent from '@/utils/useOutsideEvent';
-import SelectButton from './SelectButton';
-import { SelectComponents, SelectCustomStyles, Option } from './types';
-import Menu from './Menu';
+import React, { SelectHTMLAttributes, useRef, useState } from 'react';
+import Error from './components/Error'
+import Option from './components/Option'
+import extractStaticChildren from '@/utils/extractStaticChildren';
+import SelectButton from './components/SelectButton/SelectButton';
+import useOutsideEvent from '@/hooks/useOutsideEvent';
+import SelectProvider from './context/SelectContext';
+import useSelect from './context/useSelect';
+import Menu from './components/Menu';
+import NoOptionsMessage from './components/NoOptionsMessage';
+import DropDownIcon from './components/SelectButton/DropDownIcon';
+import ClearIcon from './components/SelectButton/ClearIcon';
+import IconsContainer from './components/SelectButton/IconsContainer';
 
 export type SelectProps = {
-    options: Option[];
-    isMulti?: boolean;
-    placeholder?: string;
-    loading?: boolean;
-    loadingMessage?: string;
-    noOptionsMessage?: string;
-    customStyles?: SelectCustomStyles;
-    components?: SelectComponents;
-    onChange?: (selected: Option | Option[] | null) => void;
-    value?: Option | Option[];
-    label?: string;
-    name?: string;
-    isError?: boolean;
-    errorMessage?: string;
-};
+    children: React.ReactNode;
+    error?: boolean;
+} & SelectHTMLAttributes<HTMLSelectElement>;
 
-const Select: React.FC<SelectProps> = ({
-    options,
-    isMulti = false,
-    placeholder = 'Select...',
-    loading = false,
-    loadingMessage = 'Loading...',
-    noOptionsMessage = 'No options',
-    customStyles = {},
-    components = {},
-    onChange,
-    value,
-    label,
-    isError = false,
-    errorMessage
-}) => {
-    const [isOpen, setIsOpen] = useState(false);
-    const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
+const SelectComponent: React.FC<SelectProps> = ({ children }) => {
+    const { setIsOpen, error } = useSelect()
     const selectRef = useRef<HTMLDivElement>(null);
-
     useOutsideEvent(selectRef, () => setIsOpen(false));
 
-    const handleOpen = (e: React.MouseEvent) => {
-        e.stopPropagation()
-        setIsOpen(!isOpen)
-    }
+    const { noOptionsMessage: noOptionsElement, menu: menuElement, selectButton: selectButtonElement, iconsContainer: iconsContainerElement } = extractStaticChildren(children, [NoOptionsMessage, Menu, SelectButton, IconsContainer])
 
-    const handleOptionClick = (option: Option, e: React.MouseEvent) => {
-        e.stopPropagation()
-        if (isMulti) {
-            if (selectedOptions.some(selected => selected.value === option.value)) {
-                setSelectedOptions(selectedOptions.filter(selected => selected.value !== option.value));
-            } else {
-                setSelectedOptions([...selectedOptions, option]);
-            }
-        } else {
-            setSelectedOptions([option]);
-            setIsOpen(false);
-        }
-        onChange && onChange(isMulti ? selectedOptions : option);
-    };
-
-    const handleClear = (e: React.MouseEvent) => {
-        e.stopPropagation();
-        setSelectedOptions([]);
-        onChange && onChange(isMulti ? [] : null);
-    };
-
-    const labelStyles = clsx("block mb-1 ml-1", customStyles.label, { 'text-red-solid': isError && !customStyles.errorLabel }, customStyles.errorLabel)
-    const errorMessageStyle = clsx({
-        'text-red-solid pl-1 pt-1': !customStyles.errorMessage
-    },
-        customStyles.errorMessage)
-
-    customStyles.selectButton = clsx(customStyles.selectButton, { "border-2 border-red-solid text-red-solid": isError && !isOpen && !customStyles.selectError }, customStyles.selectError)
-
-    return (
-        <div className={clsx('relative min-w-[250px] max-w-[350px]', customStyles.selectContainer)} ref={selectRef}>
-            {label && <label className={labelStyles} onClick={() => setIsOpen(true)}>{label}</label>}
-            <SelectButton
-                isOpen={isOpen}
-                handleOpen={handleOpen}
-                placeholder={placeholder}
-                selectedOptions={selectedOptions}
-                isMulti={isMulti}
-                customStyles={customStyles}
-                components={components}
-                handleOptionClick={handleOptionClick}
-                handleClear={handleClear}
-            />
-            {errorMessage && !isOpen && <div className={errorMessageStyle}>{errorMessage}</div>}
-            {isOpen && (
-                <Menu
-                    options={options}
-                    loading={loading}
-                    loadingMessage={loadingMessage}
-                    noOptionsMessage={noOptionsMessage}
-                    selectedOptions={selectedOptions}
-                    handleOptionClick={handleOptionClick}
-                    customStyles={customStyles}
-                    isMulti={isMulti}
-                />
-            )}
-        </div>
-    );
+    return <div className='relative select-none' ref={selectRef}>
+        {iconsContainerElement || <IconsContainer />}
+        {selectButtonElement || <SelectButton />}
+        {menuElement}
+        {error && noOptionsElement}
+    </div>;
 };
 
-export default Select;
+const Select: React.FC<SelectProps> = ({ multiple = false, error = false, ...props }) => {
+
+    return <SelectProvider error={error} multiple={multiple}>
+        <SelectComponent {...props} />
+    </SelectProvider>
+}
+
+export default Object.assign(Select, {
+    Option: Option,
+    Error: Error,
+    Menu: Menu,
+    Button: SelectButton,
+    NoOptionMessage: NoOptionsMessage,
+    IconsContainer: IconsContainer
+});

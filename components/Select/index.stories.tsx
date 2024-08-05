@@ -1,5 +1,6 @@
 import { Meta, StoryObj } from "@storybook/react"
 import Select from "."
+import { ChevronDoubleDownIcon } from "@heroicons/react/24/solid"
 
 const meta: Meta<typeof Select> = {
     title: "Components/Select",
@@ -15,121 +16,37 @@ export default meta
 type Story = StoryObj<typeof Select>
 
 
-export const DefaultSingle: Story = {
+export const Default: Story = {
     args: {
-        options: [
-            {
-                title: "male",
-                value: "first"
-            },
-            {
-                title: "female",
-                value: "second"
-            },
-            {
-                title: "hexocopter",
-                value: "third",
-                isDisabled: true
-            }
-        ]
+        children: <>
+            <Select.Menu>
+                <Select.Option value={"first"}>First Item</Select.Option>
+                <Select.Option value={"second"}>Second Item</Select.Option>
+            </Select.Menu>
+            <Select.NoOptionMessage>Fuck</Select.NoOptionMessage>
+        </>
     }
 }
 
-export const DefaultMulti: Story = {
+export const Custom: Story = {
     args: {
-        label: "Your gender",
-        isMulti: true,
-        options: [
-            {
-                title: "male",
-                value: "first"
-            },
-            {
-                title: "female",
-                value: "second"
-            },
-            {
-                title: "hexocopter",
-                value: "third",
-                isDisabled: true
-            },
-            {
-                title: "punk",
-                value: "punk"
-            },
-            {
-                title: "car",
-                value: "car"
-            }
-        ]
-    }
-}
+        children: <>
+            <Select.Button className="bg-green-300 border-0"></Select.Button>
 
-export const ErrorHandlingDefault: Story = {
-    args: {
-        label: "Your gender",
-        isMulti: true,
-        options: [
-            {
-                title: "male",
-                value: "first"
-            },
-            {
-                title: "female",
-                value: "second"
-            },
-            {
-                title: "hexocopter",
-                value: "third",
-                isDisabled: true
-            },
-            {
-                title: "punk",
-                value: "punk"
-            },
-            {
-                title: "car",
-                value: "car"
-            }
-        ],
-        isError: true,
-        errorMessage: "Choose at least one element",
-    }
-}
+            <Select.IconsContainer className="bg-green-solid">
+                <Select.IconsContainer.DropDownIcon className="bg-red-solid">
+                    <ChevronDoubleDownIcon width={18}></ChevronDoubleDownIcon>
+                </Select.IconsContainer.DropDownIcon>
+            </Select.IconsContainer>
 
+            <Select.Menu>
+                <Select.Option value={"first"}>First Item</Select.Option>
+                <Select.Option value={"second"}>Second Item</Select.Option>
+            </Select.Menu>
 
-export const ErrorHandlingCustom: Story = {
-    args: {
-        label: "Your gender",
-        isMulti: true,
-        options: [
-            {
-                title: "male",
-                value: "first"
-            },
-            {
-                title: "female",
-                value: "second"
-            },
-            {
-                title: "hexocopter",
-                value: "third",
-                isDisabled: true
-            },
-            {
-                title: "punk",
-                value: "punk"
-            },
-            {
-                title: "car",
-                value: "car"
-            }
-        ],
-        isError: true,
-        errorMessage: "Choose at least one element",
-        customStyles: {
-            errorMessage: "text-orange-solid",
-            selectError: "border-4"
-        }
+            <Select.NoOptionMessage className="text-orange-400">Fuck</Select.NoOptionMessage>
+        </>,
+
+        error: false
     }
 }

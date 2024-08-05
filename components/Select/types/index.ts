@@ -1,3 +1,3 @@
-export * from "./Option"
+export * from "./OptionType"
 export * from "./SelectComponents"
 export * from "./SelectCustomStyles"
