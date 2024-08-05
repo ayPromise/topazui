@@ -38,7 +38,6 @@ export const Error: Story = {
         error: true,
         id: "password",
         children: <>
-            <Input.Label htmlFor={"password"}>Password</Input.Label>
             <Input.Icon icon="email" iconVariant='solid' />
             <Input.Error>Invalid password</Input.Error>
         </>
@@ -52,7 +51,6 @@ export const Custom: Story = {
         name: "book",
 
         children: <>
-            <Input.Label styles={{ baseStyles: 'text-[15px]', errorStyles: 'text-green-solid' }}>Title</Input.Label>
             <Input.Error >Wrong password</Input.Error>
             <Input.Icon>
                 <BuildingLibraryIcon width={20} />

@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { inputVariants, InputVariantsType } from './styles/Input.variants';
 import Icon from './components/Icon';
-import Label from './components/Label';
 import Error from './components/Error';
 import extractStaticChildren from '@/utils/extractStaticChildren';
 import InputProvider from './context/InputContext';
@@ -20,13 +19,12 @@ const InputComponent: React.FC<InputProps> = ({
     children,
     ...props
 }) => {
-    const { label: labelElement, error: errorElement, icon: iconElement } = extractStaticChildren(children, [Label, Error, Icon]);
+    const { error: errorElement, icon: iconElement } = extractStaticChildren(children, [Error, Icon]);
     const { error } = useInputError()
     const inputStyles = inputVariants({ size, disabled, error, icon: !!iconElement, className });
 
     return (
         <div>
-            {labelElement}
             <div className='relative'>
                 <input
                     onBlur={onBlur}
@@ -50,7 +48,6 @@ const Input = ({ error = false, ...props }: InputProps) => (
 );
 
 export default Object.assign(Input, {
-    Label: Label,
     Error: Error,
     Icon: Icon
 });
