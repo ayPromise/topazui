@@ -1,6 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { BuildingOfficeIcon } from '@heroicons/react/24/outline';
 import Input from '.';
+import { BuildingLibraryIcon } from '@heroicons/react/24/solid';
 
 const meta: Meta<typeof Input> = {
     title: 'Components/Input',
@@ -26,11 +27,7 @@ export const Email: Story = {
     args: {
         type: "email",
         placeholder: "Enter your email",
-        readyIconVariant: "outline",
-        readyIcon: "email",
-        customStyles: {
-            iconBackground: "separate"
-        }
+        children: <Input.Icon icon='email' iconVariant='outline'></Input.Icon>
     }
 };
 
@@ -38,14 +35,13 @@ export const Error: Story = {
     args: {
         type: "password",
         placeholder: "Enter password",
-        value: "qwerty",
-        label: "Password",
         error: true,
-        errorMessage: "Enter valid password",
-        readyIcon: "password",
-        customStyles: {
-            iconBackground: "separate"
-        }
+        id: "password",
+        children: <>
+            <Input.Label htmlFor={"password"}>Password</Input.Label>
+            <Input.Icon icon="email" iconVariant='solid' />
+            <Input.Error>Invalid password</Input.Error>
+        </>
     }
 };
 
@@ -53,12 +49,14 @@ export const Custom: Story = {
     args: {
         type: "text",
         placeholder: "Enter book",
-        customIcon: <BuildingOfficeIcon width={30} />,
+        name: "book",
 
-        customStyles: {
-            iconBackground: "bg-gray-solid border-gray-400 border-r-2 text-gray-400",
-            inputStyles: "bg-gray-solid",
-
-        },
+        children: <>
+            <Input.Label styles={{ baseStyles: 'text-[15px]', errorStyles: 'text-green-solid' }}>Title</Input.Label>
+            <Input.Error >Wrong password</Input.Error>
+            <Input.Icon>
+                <BuildingLibraryIcon width={20} />
+            </Input.Icon>
+        </>,
     }
 };
