@@ -1,11 +1,11 @@
-import NoOptionsMessage from "./NoOptionsMessage"
-import Menu from "./Menu"
+import NoOptionsMessage from "./Basic/NoOptionsMessage"
+import Menu from "./Basic/Menu"
 import Option from "./Option"
-import SelectButton from "./SelectButton"
-import Error from "./Error"
+import SelectButton from "./Basic/SelectButton"
+import Error from "./Basic/Error"
 
-import IconsContainer from "./IconsContainer"
-import ClearIcon from "./ClearIcon"
-import DropDownIcon from "./DropDownIcon"
+import IconsContainer from "./Basic/IconsContainer"
+import ClearIcon from "./Basic/ClearIcon"
+import DropDownIcon from "./Basic/DropDownIcon"
 
 export {NoOptionsMessage, Menu, Option, SelectButton, Error, IconsContainer, ClearIcon, DropDownIcon}

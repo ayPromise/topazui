@@ -4,11 +4,17 @@ import useOutsideEvent from '@/hooks/useOutsideEvent';
 import SelectProvider from './context/SelectContext';
 import useSelect from './context/useSelect';
 import { IconsContainer, Menu, NoOptionsMessage, SelectButton, Option, Error } from './components';
+import List from './components/List/List';
+import { OptionType } from './types';
 
-export type SelectProps = {
+export type SelectCustomProps = {
     children: React.ReactNode;
     error?: boolean;
-} & SelectHTMLAttributes<HTMLSelectElement>;
+    withInput?: boolean;
+    onChange?: (options: OptionType[]) => void;
+}
+
+type SelectProps = SelectCustomProps & Omit<SelectHTMLAttributes<HTMLSelectElement>, keyof SelectCustomProps>
 
 const SelectComponent: React.FC<SelectProps> = ({ children }) => {
     const { setIsOpen, error } = useSelect()
@@ -24,10 +30,11 @@ const SelectComponent: React.FC<SelectProps> = ({ children }) => {
     </div>;
 };
 
-const Select: React.FC<SelectProps> = ({ multiple = false, error = false, ...props }) => {
+const Select: React.FC<SelectProps> = ({ multiple = false, error = false, withInput = false, onChange, ...props }) => {
+    const { list: listElement } = extractStaticChildren(props.children, [List])
 
-    return <SelectProvider error={error} multiple={multiple}>
-        <SelectComponent {...props} />
+    return <SelectProvider error={error} multiple={multiple} isList={!!listElement} onChange={onChange} withInput={withInput}>
+        {listElement || <SelectComponent {...props} />}
     </SelectProvider>
 }
 
@@ -37,5 +44,6 @@ export default Object.assign(Select, {
     Menu: Menu,
     Button: SelectButton,
     NoOptionMessage: NoOptionsMessage,
-    IconsContainer: IconsContainer
+    IconsContainer: IconsContainer,
+    List: List
 });

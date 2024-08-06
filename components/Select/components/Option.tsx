@@ -1,7 +1,8 @@
 import React, { ComponentProps, ElementType, OptionHTMLAttributes } from 'react'
 import useSelect from '../context/useSelect'
 import { OptionType } from '../types';
-import { tv } from 'tailwind-variants';
+import StylesProps from '@/types/StylesProps';
+import { optionListVariants, optionMenuVariants } from './styles/Option.variants'
 
 type OptionCustomProps<E extends ElementType = ElementType> = {
     children: string;
@@ -14,7 +15,8 @@ type OptionProps<E extends ElementType> = OptionCustomProps<E> & Omit<ComponentP
 const defaultElementType = 'option'
 
 const Option = <E extends ElementType = typeof defaultElementType>({ children, className, value, disabled, as: Component = defaultElementType as E, ...props }: OptionProps<E>) => {
-    const { selectedOptions, setSelectedOptions, isMultiple, setIsOpen } = useSelect()
+    const { selectedOptions, setSelectedOptions, isMultiple, setIsOpen, isList } = useSelect()
+
     const option: OptionType = {
         title: children,
         value,
@@ -23,26 +25,25 @@ const Option = <E extends ElementType = typeof defaultElementType>({ children, c
 
     const selected = selectedOptions.some(o => o.value === option.value)
 
-    console.log(selected)
-
-    const optionStyles = tv({
-        base: 'bg-white hover:bg-gray-200 cursor-pointer p-2 selected:bg-gray-200',
-        variants: {
-            disabled: {
-                true: 'opacity-50 pointer-events-none',
-                false: ''
-            }
-        }
-    })
-
+    const optionStyles = isList ? optionListVariants({ disabled, selected, className }) : optionMenuVariants({ disabled, selected, className })
 
     const handleSelect = () => {
-        setIsOpen(false)
-        return isMultiple ? setSelectedOptions([...selectedOptions, option]) :
-            setSelectedOptions([option])
-    }
+        const isOptionSelected = selectedOptions.some(o => o.value === option.value);
+
+        if (isOptionSelected) {
+            setSelectedOptions(selectedOptions.filter(o => o.value !== option.value));
+        } else {
+            if (isMultiple) {
+                setSelectedOptions([...selectedOptions, option]);
+            } else {
+                setIsOpen(false)
+                setSelectedOptions([option]);
+            }
+        }
+    };
+
     //@ts-ignore
-    return <Component className={optionStyles({ selected, disabled, className })} onClick={handleSelect} {...props}>{children}</Component>
+    return <Component className={optionStyles} onClick={handleSelect} {...props}>{children}</Component>
 
 }
 

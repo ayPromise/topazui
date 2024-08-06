@@ -1,8 +1,9 @@
 import { tv } from "tailwind-variants"
-import useSelect from "../context/useSelect"
+import useSelect from "../../context/useSelect"
 import { XMarkIcon } from "@heroicons/react/16/solid"
+import { ChildrenAndStyles } from "@/types"
 
-const ClearIcon = ({ children, className }: { children?: React.ReactNode, className?: string }) => {
+const ClearIcon = ({ children, className, action }: ChildrenAndStyles & { action?: (args: any) => void }) => {
     const { setIsOpen, setSelectedOptions } = useSelect()
     const clearIconStyles = tv({ base: 'hover:opacity-30 flex justify-center items-center cursor-pointer' })
 
@@ -12,7 +13,7 @@ const ClearIcon = ({ children, className }: { children?: React.ReactNode, classN
         return setSelectedOptions([])
     }
 
-    return <div className={clearIconStyles({ className })} onClick={handleClearAll}>
+    return <div className={clearIconStyles({ className })} onClick={action || handleClearAll}>
         {children ? children : <XMarkIcon width={18} />}
     </div>
 }
