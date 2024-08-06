@@ -48,7 +48,7 @@ const SelectButton = ({ children, className }: ChildrenAndStyles) => {
                 {value.map(o => <div key={o.value} className='bg-gray-200 rounded px-2 flex items-center justify-center' >{o.title} <ClearIcon action={(e) => handleRemoveOption(e, o)} /></div>)}
             </div>}
 
-            {!isMultiple && !Array.isArray(value) && <div className='flex gap-1 flex-wrap max-w-[170px]'>
+            {!isMultiple && !Array.isArray(value) && !withInput && <div className='flex gap-1 flex-wrap max-w-[170px]'>
                 {value.title}
             </div>}
 
