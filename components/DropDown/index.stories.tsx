@@ -1,8 +1,8 @@
 import { Meta, StoryObj } from "@storybook/react"
 import DropDown from "."
 import Button from "../Button"
-import { ChevronRightIcon, ChevronDownIcon, ChevronLeftIcon } from "@heroicons/react/24/solid"
 import ExampleMenu from "./exampleMenu"
+import { ChevronDownIcon, ChevronRightIcon } from "@heroicons/react/24/solid"
 const meta: Meta<typeof DropDown> = {
     title: "Components/DropDown",
     component: DropDown,
@@ -16,96 +16,70 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {
+export const DefaultOnClick: Story = {
     args: {
-        HeaderComponent: <Button className="justify-around" clickAnimation={false} hoverEffect="none">Menu <ChevronDownIcon width={20} /></Button>,
-        alignSide: "center",
-        shownBy: "click",
-        items: [
-            {
-                title: "First item",
-                path: "about/me"
-            },
-            {
-                title: "Second item",
-                path: "about/you"
-            },
-            {
-                title: "Third item",
-                action: () => alert("You pressed the option")
-            },
-            {
-                NestedDropDownMenu: <DropDown
-                    HeaderComponent={<div className="flex justify-between"> Price <ChevronRightIcon width={20} /></div>}
-                    items={[{ title: "First item", path: "fourth/first" }, {
-                        title: "Second item",
-                        path: "about/you"
-                    }, {
-                        title: "Third item",
-                        action: () => alert("You pressed the option")
-                    },]}
+        children: <>
+            <DropDown.Header><Button hoverEffect="none" className="flex justify-between">Menu <ChevronDownIcon width={20} /></Button></DropDown.Header>
+            <DropDown.Menu>
+                <DropDown.Item href="#">First item</DropDown.Item>
+                <DropDown.Item href="#">Second item</DropDown.Item>
 
-                    alignSide='right'
-                    shownBy="click"
-                />,
-                isSeparated: true,
-            }
-        ]
+                <DropDown.Item>
+
+                    <DropDown alignSide="right">
+                        <DropDown.Header className="flex justify-between">Third item <ChevronRightIcon width={20} /></DropDown.Header>
+                        <DropDown.Menu>
+                            <DropDown.Item>First item</DropDown.Item>
+                            <DropDown.Item disabled>Second item</DropDown.Item>
+                            <DropDown.Item>Third item</DropDown.Item>
+                        </DropDown.Menu>
+                    </DropDown>
+
+                </DropDown.Item>
+
+                <DropDown.Item href="#">Fourth item</DropDown.Item>
+            </DropDown.Menu>
+        </>,
     }
 }
 
-export const CustomDefault: Story = {
+export const DefaultOnHover: Story = {
     args: {
-        HeaderComponent: <Button className="justify-around" clickAnimation={false} hoverEffect="none">Menu <ChevronDownIcon width={20} /></Button>,
-        alignSide: "center",
-        shownBy: "click",
-        items: [
-            {
-                title: "First item",
-                path: "about/me"
-            },
-            {
-                title: "Second item",
-                path: "about/you"
-            },
-            {
-                title: "Third item",
-                action: () => alert("You pressed the option")
-            },
-            {
-                NestedDropDownMenu: <DropDown
-                    HeaderComponent={<div className="flex justify-between"> Price <ChevronRightIcon width={20} /></div>}
-                    items={[{ title: "First item", path: "fourth/first" }, {
-                        title: "Second item",
-                        path: "about/you"
-                    }, {
-                        title: "Third item",
-                        action: () => alert("You pressed the option")
-                    },]}
+        children: <>
+            <DropDown.Header><Button hoverEffect="none" className="flex justify-between">Menu <ChevronDownIcon width={20} /></Button></DropDown.Header>
+            <DropDown.Menu>
+                <DropDown.Item href="#">First item</DropDown.Item>
+                <DropDown.Item href="#">Second item</DropDown.Item>
 
-                    alignSide='right'
-                    shownBy="click"
-                />,
-                isSeparated: true,
-            }
-        ],
-        customStyles: {
-            menu: "w-[300px] bg-red-solid text-red-text",
-            item: "hover:bg-black"
-        }
+                <DropDown.Item>
+
+                    <DropDown alignSide="right" shownBy="hover">
+                        <DropDown.Header className="flex justify-between">Third item <ChevronRightIcon width={20} /></DropDown.Header>
+                        <DropDown.Menu>
+                            <DropDown.Item>First item</DropDown.Item>
+                            <DropDown.Item disabled>Second item</DropDown.Item>
+                            <DropDown.Item>Third item</DropDown.Item>
+                        </DropDown.Menu>
+                    </DropDown>
+
+                </DropDown.Item>
+
+                <DropDown.Item href="#">Fourth item</DropDown.Item>
+            </DropDown.Menu>
+        </>,
+        shownBy: 'hover'
     }
 }
 
-export const AllCustom: Story = {
+
+export const Custom: Story = {
     args: {
-        HeaderComponent: <div className="hover:text-green-solid font-bold">Products </div>,
-        MenuComponent: <ExampleMenu />,
-        shownBy: "click",
-        alignSide: 'center',
-        customStyles: {
-            menu: 'top-[calc(100%+1.5rem)]',
-            selectedItems: 'text-green-solid'
-        },
-        selectFlag: true,
+        children: <>
+            <DropDown.Header>Menu</DropDown.Header>
+            <DropDown.Content>
+                <ExampleMenu />
+            </DropDown.Content>
+        </>,
+        shownBy: 'hover'
     }
 }

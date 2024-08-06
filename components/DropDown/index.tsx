@@ -1,51 +1,25 @@
-import React, { useRef, useState } from 'react';
-import DefaultMenuList, { ItemProps } from './DefaultMenuList';
-import useOutsideEvent from '@/utils/useOutsideEvent';
-import clsx from 'clsx';
-import { DropDownCustomStyles } from './types';
+import React, { useRef } from 'react';
+import useOutsideEvent from '@/hooks/useOutsideEvent';
+import Header from './components/Header';
+import Menu from './components/Menu';
+import Item from './components/Item';
+import useDropDown from './context/useDropDown';
+import { DropDownProvider } from './context/DropDownContext';
+import Content from './components/Content';
+import { tv } from 'tailwind-variants';
 
 export type DropDownProps = {
-    HeaderComponent: React.ReactNode;
-    MenuComponent?: React.ReactNode;
-    alignSide?: 'left' | 'center' | 'right';
-    items: ItemProps[];
     shownBy?: 'click' | 'hover';
-    animation?: 'fade' | 'fadeSlide' | 'none';
-    selectFlag?: boolean;
-    selectIndicator?: React.ReactNode;
-    customStyles?: DropDownCustomStyles;
+    alignSide?: 'left' | 'right' | 'bottom' | 'top'
     className?: string;
+    children: React.ReactNode;
 };
 
-const DropDown: React.FC<DropDownProps> = ({
-    HeaderComponent,
-    MenuComponent,
-    alignSide = 'center',
-    items,
-    shownBy = 'click',
-    animation = 'fadeSlide',
-    selectFlag = false,
-    selectIndicator,
-    customStyles,
-    className
+const DropDownComponent: React.FC<DropDownProps> = ({
+    className,
+    children
 }) => {
-    const [isOpen, setIsOpen] = useState<boolean>(false);
-    const dropDownRef = useRef<HTMLDivElement>(null);
-    const nestedMenuRef = useRef<HTMLDivElement>(null);
-
-    useOutsideEvent(dropDownRef, () => { setIsOpen(false) }, [nestedMenuRef]);
-
-    const handleClick = () => {
-        if (shownBy === 'click') {
-            setIsOpen((prev) => !prev);
-        }
-    };
-
-    const handleMouseEnter = () => {
-        if (shownBy === 'hover') {
-            setIsOpen(true);
-        }
-    };
+    const { setIsOpen, shownBy } = useDropDown()
 
     const handleMouseLeave = () => {
         if (shownBy === 'hover') {
@@ -53,53 +27,30 @@ const DropDown: React.FC<DropDownProps> = ({
         }
     };
 
-    const isItLeftSideMenu = alignSide === 'left';
-    const isItCenteredMenu = alignSide === 'center';
-    const isItRightSideMenu = alignSide === 'right';
+    const dropDownRef = useRef<HTMLDivElement>(null);
+    const nestedMenuRef = useRef<HTMLDivElement>(null);
+    useOutsideEvent(dropDownRef, () => { setIsOpen(false) }, [nestedMenuRef]);
 
-    const isAnimationSlideOn = animation === 'fadeSlide';
-    const isAnimationFadeOn = animation === 'fade';
-
-    const menuComponentStyles = clsx(
-        'absolute min-w-full bg-gray-200 shadow-2xl rounded text-sm text-black',
-        {
-            'top-0 right-[calc(100%+0.5rem)]': isItLeftSideMenu,
-            'top-[calc(100%+0.5rem)]': isItCenteredMenu,
-            'top-0 left-[calc(100%+0.5rem)]': isItRightSideMenu,
-
-            'pointer-events-none': !isOpen,
-
-            'visible animate-fadeInLeft': isAnimationSlideOn && isOpen && isItLeftSideMenu,
-            'animate-fadeOutRight opacity-0': isAnimationSlideOn && !isOpen && isItLeftSideMenu,
-
-            'visible animate-fadeInDown': isAnimationSlideOn && isOpen && isItCenteredMenu,
-            'animate-fadeOutUp opacity-0': isAnimationSlideOn && !isOpen && isItCenteredMenu,
-
-            'visible animate-fadeInRight': isAnimationSlideOn && isOpen && isItRightSideMenu,
-            'animate-fadeOutLeft opacity-0': isAnimationSlideOn && !isOpen && isItRightSideMenu,
-        },
-        customStyles?.menu
-    );
+    const dropDownStyles = tv({
+        base: 'relative inline-flex w-full'
+    })
 
     return (
-        <div ref={dropDownRef} className={clsx('relative inline-flex px-0', customStyles?.dropDown, className)} onClick={handleClick} onMouseLeave={handleMouseLeave}>
-            <div className='relative inline-block cursor-pointer w-full' onClick={(e) => { e.stopPropagation(); handleClick() }} onMouseEnter={handleMouseEnter}>
-                <div className={clsx({ [customStyles?.selectedItems as string]: isOpen })}>{HeaderComponent}</div>
-                {selectFlag && (selectIndicator || <div className={clsx('absolute bottom-0 left-0 h-0.5 bg-green-solid transition-all duration-300', {
-                    'w-full': isOpen,
-                    'w-0': !isOpen,
-                })}></div>)}
-            </div>
-
-            {alignSide === 'center' && <div className='absolute w-full h-[40px] bottom-[-35px]'></div>}
-            {alignSide === 'right' && <div className='absolute w-[40px] h-full bottom-0 right-[-35px]'></div>}
-            {alignSide === 'left' && <div className='absolute w-[40px] h-full bottom-0 left-[-35px]'></div>}
-
-            <div ref={nestedMenuRef} className={menuComponentStyles} onClick={(e) => e.stopPropagation()}>
-                {MenuComponent || <DefaultMenuList items={items} customItemStyles={customStyles?.item} />}
-            </div>
+        <div ref={dropDownRef} className={dropDownStyles({ className })} onMouseLeave={handleMouseLeave}>
+            {children}
         </div>
     );
 };
 
-export default DropDown;
+const DropDown: React.FC<DropDownProps> = ({ shownBy = 'click', alignSide = 'bottom', ...props }) => {
+    return <DropDownProvider shownBy={shownBy} alignSide={alignSide}>
+        <DropDownComponent {...props} />
+    </DropDownProvider>
+}
+
+export default Object.assign(DropDown, {
+    Header: Header,
+    Menu: Menu,
+    Item: Item,
+    Content: Content
+});

@@ -6,9 +6,10 @@ const useOutsideEvent = (ref: React.RefObject<any>, event: () => void, nestedRef
         const handleClickOutside = (e: MouseEvent) => {
             const isOutside = (ref.current && !ref.current.contains(e.target as Node));
 
+
             const isClickedOnNestedRef = nestedRefs.length > 0 ? nestedRefs.some(nestedRef => nestedRef.current && nestedRef.current.contains(e.target as Node)) : true;
 
-            if (isOutside && isClickedOnNestedRef) {
+            if (isOutside && !isClickedOnNestedRef) {
                 event();
             }
         };
