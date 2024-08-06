@@ -6,11 +6,13 @@ import useSelect from './context/useSelect';
 import { IconsContainer, Menu, NoOptionsMessage, SelectButton, Option, Error } from './components';
 import List from './components/List/List';
 import { OptionType } from './types';
+import SelectInput from './components/Basic/SelectInput';
 
 export type SelectCustomProps = {
     children: React.ReactNode;
     error?: boolean;
     withInput?: boolean;
+    multipleStyle?: string;
     onChange?: (options: OptionType[]) => void;
 }
 
@@ -30,7 +32,7 @@ const SelectComponent: React.FC<SelectProps> = ({ children }) => {
     </div>;
 };
 
-const Select: React.FC<SelectProps> = ({ multiple = false, error = false, withInput = false, onChange, ...props }) => {
+const Select: React.FC<SelectProps> = ({ multiple = false, error = false, withInput = false, multipleStyle = '', onChange, ...props }) => {
     const { list: listElement } = extractStaticChildren(props.children, [List])
 
     return <SelectProvider error={error} multiple={multiple} isList={!!listElement} onChange={onChange} withInput={withInput}>
@@ -45,5 +47,6 @@ export default Object.assign(Select, {
     Button: SelectButton,
     NoOptionMessage: NoOptionsMessage,
     IconsContainer: IconsContainer,
-    List: List
+    List: List,
+    Input: SelectInput
 });

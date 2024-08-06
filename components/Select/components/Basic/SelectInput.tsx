@@ -3,7 +3,7 @@ import useSelect from '../../context/useSelect';
 import Input from '@/components/Input';
 import debounce from '@/utils/debounce';
 
-const SelectInput = () => {
+const SelectInput = ({ className }: { className?: string }) => {
     const { selectedOptions, setSelectedOptions, searchText, setSearchText, setIsOpen } = useSelect();
 
     useEffect(() => {
@@ -29,7 +29,9 @@ const SelectInput = () => {
         setIsOpen(true)
     }, 150), []);
 
-    return <Input type='text' className='w-full border-none' value={searchText} onChange={handleInputChange} />;
+    return <Input type='text' className={'w-full border-none' + className} value={searchText} onChange={handleInputChange} />;
 };
+
+SelectInput.displayName = 'selectInput'
 
 export default SelectInput;

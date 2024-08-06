@@ -20,6 +20,9 @@ export const MenuWithInput: Story = {
     args: {
         children: <>
             <Select.Menu>
+                <Select.Button>
+                    <Select.Input className="outline border-2" />
+                </Select.Button>
                 <Select.Option value={"first"}>First Item</Select.Option>
                 <Select.Option value={"second"}>Second Item</Select.Option>
                 <Select.Option value={"third"}>First Item</Select.Option>
@@ -58,6 +61,35 @@ export const MenuMultiple: Story = {
     }
 }
 
+
+export const CustomMenu: Story = {
+    args: {
+        children: <>
+            <Select.Button className="rounded bg-gray-400 text-gray-text border-2 border-gray-300">
+
+                <Select.IconsContainer className="text-black h-full">
+                    <Select.IconsContainer.DropDownIcon className="bg-gray-200 w-[30px] border-2 rounded-r-sm">
+                        <ChevronDoubleDownIcon width={18} />
+                    </Select.IconsContainer.DropDownIcon>
+                    <Select.IconsContainer.ClearIcon className="text-white" />
+                </Select.IconsContainer>
+
+            </Select.Button>
+
+            <Select.Menu className="rounded bg-slate-200 space-y-[2px] text-white">
+                <Select.Option value={"first"} className="bg-gray-400 hover:text-gray-500">First Item</Select.Option>
+                <Select.Option value={"second"} className="bg-gray-400 hover:text-gray-500">Second Item</Select.Option>
+            </Select.Menu>
+
+            <Select.NoOptionMessage className="text-orange-400">Fuck</Select.NoOptionMessage>
+        </>,
+
+        error: false,
+        onChange: (options) => console.log(options),
+
+    }
+}
+
 export const List: Story = {
     args: {
         children: <>
@@ -85,34 +117,6 @@ export const ListMultiple: Story = {
         </>,
         multiple: true,
         onChange: (options) => console.log(options)
-
-    }
-}
-
-export const Custom: Story = {
-    args: {
-        children: <>
-            <Select.Button className="rounded bg-gray-400 text-gray-text border-2 border-gray-300">
-
-                <Select.IconsContainer className="text-black h-full">
-                    <Select.IconsContainer.DropDownIcon className="bg-gray-200 w-[30px] border-2 rounded-r-sm">
-                        <ChevronDoubleDownIcon width={18} />
-                    </Select.IconsContainer.DropDownIcon>
-                    <Select.IconsContainer.ClearIcon className="text-white" />
-                </Select.IconsContainer>
-
-            </Select.Button>
-
-            <Select.Menu className="rounded bg-slate-200 space-y-[2px] text-white">
-                <Select.Option value={"first"} className="bg-gray-400 hover:text-gray-500">First Item</Select.Option>
-                <Select.Option value={"second"} className="bg-gray-400 hover:text-gray-500">Second Item</Select.Option>
-            </Select.Menu>
-
-            <Select.NoOptionMessage className="text-orange-400">Fuck</Select.NoOptionMessage>
-        </>,
-
-        error: false,
-        onChange: (options) => console.log(options),
 
     }
 }
