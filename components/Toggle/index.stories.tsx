@@ -1,76 +1,48 @@
-import { Meta, StoryObj } from "@storybook/react"
-import Toggle from "."
+import React, { useState } from 'react';
+import { Meta, StoryObj } from '@storybook/react';
+import Toggle, { ToggleProps } from './';
 
-
-const meta: Meta<typeof Toggle> = {
-    title: "Components/Toggle",
+export default {
+    title: 'Components/Toggle',
     component: Toggle,
-    tags: ["autodoc"],
-    parameters: {
-        layout: 'centered'
-    }
-}
+} as Meta;
 
-export default meta
+const AllVariantsTemplate: StoryObj<ToggleProps> = (props: ToggleProps) => {
+    const [isToggled, setIsToggled] = useState({
+        blue: true,
+        red: true,
+        yellow: true,
+        green: true,
+        indigo: true,
+        purple: true,
+        pink: true,
+    });
 
-type Story = StoryObj<typeof Toggle>
+    const handleToggleChange = (color: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
+        setIsToggled({ ...isToggled, [color]: e.target.checked });
+    };
 
-export const Default: Story = {
-    args: {
-        children: "Toggle me",
-        id: 'toggle'
-    }
-}
+    return (
+        <div className="space-x-4">
+            {(['blue', 'red', 'yellow', 'green', 'indigo', 'purple', 'pink'] as const).map((color) => {
+                // Destructure `variant` from props to prevent overwriting.
+                const { variant, ...rest } = props;
 
-export const Red: Story = {
-    args: {
-        children: "Toggle me",
-        variant: 'red'
-    }
-}
+                return (
+                    <Toggle
+                        key={color}
+                        variant={color}
+                        checked={isToggled[color]}
+                        onChange={handleToggleChange(color)}
+                        {...rest}
+                    >
+                        {color.charAt(0).toUpperCase() + color.slice(1)}
+                    </Toggle>
+                );
+            })}
+        </div>
+    );
+};
 
-
-export const Yellow: Story = {
-    args: {
-        children: "Toggle me",
-        variant: 'yellow'
-    }
-}
-
-
-export const Green: Story = {
-    args: {
-        children: "Toggle me",
-        variant: 'green'
-    }
-}
-
-
-export const Blue: Story = {
-    args: {
-        children: "Toggle me",
-        variant: 'blue'
-    }
-}
-
-
-export const Indigo: Story = {
-    args: {
-        children: "Toggle me",
-        variant: 'indigo'
-    }
-}
-
-export const Purple: Story = {
-    args: {
-        children: "Toggle me",
-        variant: 'purple'
-    }
-}
-
-export const Pink: Story = {
-    args: {
-        children: "Toggle me",
-        variant: 'pink'
-    }
-}
+export const AllVariants = AllVariantsTemplate.bind({});
+AllVariants.args = {};
