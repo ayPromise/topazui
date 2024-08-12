@@ -34,7 +34,7 @@ const Tooltip = <E extends ElementType = typeof defaultElementType>({ message, c
     useOutsideEvent(targetRef, () => { setVisible(false) })
 
     const tooltipStyles = tv({
-        base: 'absolute bg-black text-white text-xs font-medium rounded-md px-2 py-1 z-10 select-none transition-opacity pointer-events-none',
+        base: 'absolute bg-black text-white text-xs font-medium rounded-md px-2 py-1 z-10 select-none transition-opacity pointer-events-none min-w-[100px]',
         variants: {
             placement: {
                 'top': 'bottom-full left-1/2 transform -translate-x-1/2 mb-2',
