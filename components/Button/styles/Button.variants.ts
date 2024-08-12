@@ -1,7 +1,7 @@
 import { tv, VariantProps } from "tailwind-variants";
 
 export const buttonVariants = tv({
-  base:'flex px-4 py-2 items-center justify-center rounded cursor-pointer',
+  base:'flex px-4 py-2 items-center justify-center rounded cursor-pointer select-none',
   variants: {
     color: {
       blue: '',

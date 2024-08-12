@@ -18,13 +18,13 @@ type ButtonProps<E extends ElementType> = ButtonCustomProps<E> & Omit<ComponentP
 const defaultElementType: ElementType = "button"
 
 const Button: ButtonWithForwardRef = <E extends ElementType = typeof defaultElementType>({
-  variant = 'solid',
-  size = 'md',
-  color = 'blue',
-  transition = 'quick',
-  hoverEffect = 'scale',
-  clickAnimation = true,
-  disabled = false,
+  variant,
+  size,
+  color,
+  transition,
+  hoverEffect,
+  clickAnimation,
+  disabled,
   className = "",
   children,
   as: Component = defaultElementType as E,
