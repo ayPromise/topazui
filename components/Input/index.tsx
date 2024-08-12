@@ -10,34 +10,29 @@ export type InputProps = React.InputHTMLAttributes<HTMLInputElement> & InputVari
 
 const InputComponent: React.FC<InputProps> = ({
     size,
-    placeholder,
     name,
-    onChange,
-    onBlur,
     disabled,
     className,
     children,
     ...props
 }) => {
-    const { error: errorElement, icon: iconElement } = extractStaticChildren(children, [Error, Icon]);
+    const { error: errorElement, icon: iconElement } = extractStaticChildren(children, [{ component: Error }, { component: Icon }]);
     const { error } = useInputError()
     const inputStyles = inputVariants({ size, disabled, error, icon: !!iconElement, className });
 
     return (
-        <div>
+        <>
             <div className='relative'>
                 <input
-                    onBlur={onBlur}
                     className={inputStyles}
-                    placeholder={placeholder}
-                    name={name}
+                    id={name}
                     disabled={disabled}
                     {...props}
                 />
                 {iconElement}
             </div>
             {errorElement}
-        </div>
+        </>
     );
 };
 

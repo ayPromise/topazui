@@ -21,7 +21,7 @@ const defaultElementType = "div"
 const CheckComponent = <E extends ElementType = typeof defaultElementType>({ children, name, className, id, as: Component = defaultElementType as E, ...props }: CheckProps<E>) => {
     const optionStyles = tv({ base: "relative text-gray-900 flex gap-2 items-center cursor-pointer" })
 
-    const { input: inputElement, label: labelElement } = extractStaticChildren(children, [Input, Label])
+    const { input: inputElement, label: labelElement } = extractStaticChildren(children, [{ component: Input }, { component: Label }])
 
     //@ts-ignore
     return <Component className={optionStyles({ className })} {...props}>

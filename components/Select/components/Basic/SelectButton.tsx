@@ -9,10 +9,8 @@ import ClearIcon from './ClearIcon';
 import { OptionType } from '../../types';
 
 const SelectButton = ({ children, className }: ChildrenAndStyles) => {
-    const { iconsContainer: iconsContainerElement, selectInput: selectInputElement } = extractStaticChildren(children, [IconsContainer, SelectInput]);
+    const { iconsContainer: iconsContainerElement, selectInput: selectInputElement } = extractStaticChildren(children, [{ component: IconsContainer }, { component: SelectInput }]);
     const { withInput, selectedOptions, setSelectedOptions, setIsOpen, isOpen, isMultiple } = useSelect()
-
-    console.log(children)
 
     let value: OptionType | OptionType[]
 

@@ -23,7 +23,7 @@ const SelectComponent: React.FC<SelectProps> = ({ children }) => {
     const selectRef = useRef<HTMLDivElement>(null);
     useOutsideEvent(selectRef, () => setIsOpen(false));
 
-    const { noOptionsMessage: noOptionsElement, menu: menuElement, selectButton: selectButtonElement } = extractStaticChildren(children, [NoOptionsMessage, Menu, SelectButton])
+    const { noOptionsMessage: noOptionsElement, menu: menuElement, selectButton: selectButtonElement } = extractStaticChildren(children, [{ component: NoOptionsMessage }, { component: Menu }, { component: SelectButton }])
 
     return <div className='relative select-none' ref={selectRef}>
         {selectButtonElement || <SelectButton />}
@@ -33,7 +33,7 @@ const SelectComponent: React.FC<SelectProps> = ({ children }) => {
 };
 
 const Select: React.FC<SelectProps> = ({ multiple = false, error = false, withInput = false, multipleStyle = '', onChange, ...props }) => {
-    const { list: listElement } = extractStaticChildren(props.children, [List])
+    const { list: listElement } = extractStaticChildren(props.children, [{ component: List }])
 
     return <SelectProvider error={error} multiple={multiple} isList={!!listElement} onChange={onChange} withInput={withInput}>
         {listElement || <SelectComponent {...props} />}

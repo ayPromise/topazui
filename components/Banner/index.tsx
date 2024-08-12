@@ -12,7 +12,7 @@ type BannerProps = {
 
 const Banner = ({ children, placement, className }: BannerProps) => {
     const [visible, setIsVisible] = useState<boolean>(true)
-    const { collapseButton: collapseButtonElement, content: contentElement } = extractStaticChildren(children, [CollapseButton, Content])
+    const { collapseButton: collapseButtonElement, content: contentElement } = extractStaticChildren(children, [{ component: CollapseButton }, { component: Content }])
     const bannerStyles = tv({
         base: 'fixed left-1/2 -translate-x-1/2 z-50 flex justify-between w-full py-4 px-8 border-b border-gray-200 bg-gray-100 transition-opacity',
         variants: {
