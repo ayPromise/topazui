@@ -26,7 +26,7 @@ const Header = <E extends ElementType = typeof defaultElementType>({ className, 
     };
 
     const headerStyles = tv({
-        base: 'flex cursor-pointer items-center justify-between w-full p-5 font-medium rtl:text-right text-gray-500 focus:ring-4 focus:ring-blue-200 hover:bg-blue-100 gap-3 z-10',
+        base: 'flex cursor-pointer items-center justify-between w-full p-5 font-medium rtl:text-right text-gray-500 focus:ring-4 focus:ring-blue-200 hover:bg-blue-100 gap-3 z-10 select-none',
     })
 
 

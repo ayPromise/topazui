@@ -3,7 +3,7 @@ import Accordion from "."
 import TextLink from "../TextLink"
 
 const meta: Meta<typeof Accordion> = {
-    title: "Components/Accardion",
+    title: "Components/Accordion",
     component: Accordion,
     parameters: {
         layout: "centered"
