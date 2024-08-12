@@ -18,6 +18,6 @@ type Story = StoryObj<typeof TextLink>
 export const Default: Story = {
     args: {
         children: 'get started',
-        htmlFor: ''
+        href: '#'
     }
 }
