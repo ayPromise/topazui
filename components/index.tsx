@@ -11,3 +11,8 @@ export * from "./Accordion"
 export * from "./Breadcrumbs"
 export * from "./Popover"
 export * from "./Toggle"
+export * from "./Tabs"
+export * from "./Spinner"
+export * from "./Carousel"
+
+
