@@ -21,7 +21,6 @@ const Header = <E extends ElementType = typeof defaultElementType>({ as: Compone
     const handleClick = () => {
         if (shownBy === 'click') {
             setIsOpen(!isOpen);
-            console.log(23)
         }
     };
 
