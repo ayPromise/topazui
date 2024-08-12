@@ -15,7 +15,7 @@ const defaultElementType = 'div'
 const Badge = <E extends ElementType = typeof defaultElementType>({ children, className, variant, as: Component = defaultElementType as E, ...props }: BadgeProps<E>) => {
 
     const badgeStyles = tv({
-        base: 'inline-block whitespace-nowrap rounded-[0.27rem] px-[0.65em] pb-[0.25em] pt-[0.35em] text-center align-baseline text-[0.75em] font-bold leading-none',
+        base: 'inline-block whitespace-nowrap rounded-[0.27rem] px-[0.65em] pb-[0.25em] pt-[0.35em] text-center align-baseline text-[0.75em] font-bold leading-none select-none',
         variants: {
             variant: {
                 default: 'bg-gray-50 text-gray-600 ring-gray-500/10',
