@@ -1,36 +1,67 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# TopazUI
 
-## Getting Started
+A lightweight, customizable React component library built with **TailwindCSS** and designed for modern web applications. TopazUI offers a set of accessible, reusable, and themeable UI components to speed up development without sacrificing design flexibility.
 
-First, run the development server:
+## ✨ Component Preview
+
+Storybook is available for local exploration of all components.
+
+![Анімація](https://github.com/user-attachments/assets/ec1cbdac-611a-4760-a542-53d427d2f52e)
+
+
+
+## 🛠 Tech Stack
+
+**Client:** React 18, Next.js 14, TailwindCSS  
+
+**Tooling & Dev Experience:** Storybook 8, TypeScript 5, ESLint 8
+## 🚀 Getting Started
+
+Clone the project
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+  git clone git@github.com:ayPromise/topazui.git
+  cd topazui
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Install Dependencies
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+  npm install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Start Storybook
 
-## Learn More
+```bash
+  npm run storybook
+```
 
-To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🧩 Available Components
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+**Form Elements:** Button, Input, Select, Check
 
-## Deploy on Vercel
+**Navigation:** SideNav, Tabs, Breadcrumbs
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+**Feedback:** Tooltip, Badge, Spinner, Banner, Popover, Toggle
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+**Layout/UI:** Accordion, Carousel, DropDown
+
+**Additional components and accessibility improvements are in progress.**
+
+
+## 🧪 Testing
+
+🔧 Automated testing is not currently implemented.
+Unit and integration test support is planned for a future update.
+
+
+## 🔗 Links
+[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/dan-dziu-8b83a9249)
+
+## 💬 Feedback
+
+If you have any feedback or suggestions, feel free to contact me:
+📧 fatherpother@gmail.com
+📱 Telegram: @danylo1554
+
